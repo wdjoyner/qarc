@@ -1,0 +1,353 @@
+[Event "Ch World (corr.)"]
+[Site "corr."]
+[Date "1965.??.??"]
+[Round "5"]
+[White "Abramson Moisey"]
+[Black "Berliner Hans J (USA)"]
+[Result "0-1"]
+[ECO "A41"]
+[WhiteElo "0"]
+[BlackElo "0"]
+[Annotator ""]
+[Source ""]
+[Remark ""]
+
+1.Nf3 g6 2.c4 Bg7 3.d4 d6 4.Nc3 e5 5.e3 Nd7 6.a3 Ngf6 7.b4 O-O
+8.Bb2 c6 9.Be2 Re8 10.O-O e4 11.Nd2 Nf8 12.Re1 h5 13.f4 exf3
+14.Bxf3 N8h7 15.e4 Ng4 16.Nf1 Qh4 17.Qd2 Ng5 18.Re2 Be6 19.Qd3
+c5 20.bxc5 dxc5 21.Nd5 cxd4 22.Bxg4 Qxg4 23.Rae1 b5 24.c5 Bxd5
+25.exd5 Rxe2 26.Qxe2 Qxe2 27.Rxe2 d3 28.Rd2 Ne4 29.Bxg7 Nxd2
+30.Bd4 Ne4 31.c6 Kf8 32.Be5 f6 33.Bf4 Ke7 34.Ne3 d2 35.Kf1 Nc3
+36.d6+ Ke6 0-1
+
+[Event "5th Correspondence World Championship"]
+[Site "ICCF"]
+[Date "1965.07.01"]
+[EventDate "1965.07.01"]
+[Round "10"]
+[Result "0-1"]
+[White "Roman Zinovievich Altshuler"]
+[Black "Hans Berliner"]
+[ECO "B04"]
+[WhiteElo "0"]
+[BlackElo "0"]
+[PlyCount "50"]
+
+1.e4 Nf6 2.e5 Nd5 3.d4 d6 4.Nf3 g6 5.Ng5 dxe5 6.dxe5 Bg7 7.Bc4
+c6 8.Qe2 h6 9.Nf3 Bg4 10.Nbd2 b5 11.Bb3 Nf4 12.Qf1 Qa5 13.c3
+Nd7 14.Bc2 Nxe5 15.Nd4 Qc7 16.Ne4 Nc4 17.h3 Bd7 18.g3 Ne6
+19.Nf3 Ne5 20.Qe2 Nxf3+ 21.Qxf3 f5 22.Nd2 O-O 23.Nb3 c5 24.O-O
+c4 25.Nd4 Nxd4 0-1
+
+[Event "Ch World (corr.)"]
+[Site "corr."]
+[Date "1965.??.??"]
+[Round "16"]
+[White "Berliner Hans J (USA)"]
+[Black "Borisenko Georgy K (UZB)"]
+[Result "1-0"]
+[ECO "D86"]
+[WhiteElo "0"]
+[BlackElo "2354"]
+[Annotator ""]
+[Source ""]
+[Remark ""]
+
+1.d4 Nf6 2.c4 g6 3.Nc3 d5 4.cxd5 Nxd5 5.e4 Nxc3 6.bxc3 Bg7 7.Bc4
+O-O 8.h4 c5 9.Ne2 Nc6 10.Be3 cxd4 11.cxd4 b5 12.Bd5 Bd7 13.h5
+e6 14.Bb3 Na5 15.Qd2 Nb7 16.Rc1 Rc8 17.Rxc8 1-0
+
+
+[Event "5th Correspondence World Championship"]
+[Site "ICCF"]
+[Date "1965.07.01"]
+[EventDate "1965.07.01"]
+[Round "4"]
+[Result "0-1"]
+[White "Heinz De Carbonnel"]
+[Black "Hans Berliner"]
+[ECO "E80"]
+[WhiteElo "0"]
+[BlackElo "0"]
+[PlyCount "92"]
+
+1.d4 Nf6 2.c4 g6 3.Nc3 Bg7 4.e4 d6 5.f3 c6 6.Be3 a6 7.Qd2 b5
+8.O-O-O Qa5 9.Kb1 Nbd7 10.g4 Rb8 11.h4 h5 12.g5 Nh7 13.Rh2
+Nhf8 14.Rc1 Nb6 15.cxb5 axb5 16.Nd1 Qa8 17.f4 Nc4 18.Bxc4 bxc4
+19.Rf2 c5 20.Nc3 Ne6 21.dxc5 Bb7 22.cxd6 Bxe4+ 23.Ka1 O-O
+24.dxe7 Rfe8 25.Qd1 Rxe7 26.Nf3 Rd8 27.Nd2 Nd4 28.Bxd4 Bxd4
+29.Ndxe4 Bxf2 30.Qc2 Be3 31.Rf1 Rd3 32.Nf6+ Kg7 33.f5 Re5
+34.fxg6 fxg6 35.Qh2 Qb8 36.Rb1 Rb5 37.Qh1 Bd4 38.Nxb5 Qxb5
+39.Qh2 Qb7 40.Ne8+ Kh8 41.Nd6 Qd5 42.Qf4 Rf3 43.Qe4 c3 44.Qe8+
+Kh7 45.Qe7+ Bg7 46.bxc3 Qxd6 0-1
+
+
+[Event "5th Correspondence World Championship"]
+[Site "ICCF"]
+[Date "1965.07.01"]
+[EventDate "1965.07.01"]
+[Round "6"]
+[Result "1/2-1/2"]
+[White "Lucius Endzelins"]
+[Black "Hans Berliner"]
+[ECO "E98"]
+[WhiteElo "0"]
+[BlackElo "0"]
+[PlyCount "42"]
+
+1.d4 Nf6 2.c4 g6 3.Nc3 Bg7 4.e4 d6 5.Be2 O-O 6.Nf3 e5 7.O-O
+Nc6 8.d5 Ne7 9.Ne1 Nd7 10.Nd3 f5 11.exf5 Nxf5 12.f3 Nf6 13.Nf2
+Bh6 14.Bxh6 Nxh6 15.Nfe4 Nf5 16.Qd2 Nd4 17.Nb5 Nxe2+ 18.Qxe2
+a6 19.Nbc3 Bf5 20.Qe3 Bxe4 21.Nxe4 Nxe4 1/2-1/2
+
+
+[Event "5th Correspondence World Championship"]
+[Site "ICCF"]
+[Date "1965.07.01"]
+[EventDate "1965.07.01"]
+[Round "14"]
+[Result "0-1"]
+[White "Arne Ericson"]
+[Black "Hans Berliner"]
+[ECO "B04"]
+[WhiteElo "0"]
+[BlackElo "0"]
+[PlyCount "104"]
+
+1.e4 Nf6 2.e5 Nd5 3.d4 d6 4.Nf3 g6 5.Be2 Bg7 6.c4 Nb6 7.exd6
+cxd6 8.h3 O-O 9.O-O Nc6 10.Nc3 Bf5 11.Be3 d5 12.c5 Nc4 13.Bxc4
+dxc4 14.d5 Nb4 15.Bd4 Bd3 16.Bxg7 Kxg7 17.Re1 Qc7 18.Re5 f6
+19.d6 exd6 20.cxd6 Qxd6 21.Rb5 b6 22.a3 Na6 23.Rd5 Qe7 24.Ne1
+Bf5 25.Qa4 Nc5 26.Qxc4 Be6 27.Qe2 Rfe8 28.Rdd1 Nb3 29.Rab1 Bf5
+30.Qb5 Qf7 31.Nd3 Rad8 32.Nf4 Bxb1 33.Rxb1 Re5 34.Qc6 Qd7
+35.Qxd7+ Rxd7 36.g3 Rd2 37.Kg2 g5 38.Nh5+ Kg6 39.g4 Nc5 40.Ng3
+Nd3 41.Nge4 Rxb2 42.Rd1 Nf4+ 43.Kf1 Ne2 44.a4 Nxc3 45.Nxc3 Rb3
+46.Ne2 Rxh3 47.Rd7 Ra3 48.Ng3 Rxa4 49.f3 Ra1+ 50.Kg2 Ra2+
+51.Kh3 Re3 52.Rc7 Rb3 0-1
+
+
+[Event "5th Correspondence World Championship"]
+[Site "ICCF"]
+[Date "1965.07.01"]
+[EventDate "1965.07.01"]
+[Round "12"]
+[Result "0-1"]
+[White "Yakov Estrin"]
+[Black "Hans Berliner"]
+[ECO "C57"]
+[WhiteElo "0"]
+[BlackElo "0"]
+[PlyCount "84"]
+
+1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5 b5 6.Bf1 Nd4 7.c3
+Nxd5 8.Ne4 Qh4 9.Ng3 Bg4 10.f3 e4 11.cxd4 Bd6 12.Bxb5+ Kd8
+13.O-O exf3 14.Rxf3 Rb8 15.Be2 Bxf3 16.Bxf3 Qxd4+ 17.Kh1 Bxg3
+18.hxg3 Rb6 19.d3 Ne3 20.Bxe3 Qxe3 21.Bg4 h5 22.Bh3 g5 23.Nd2
+g4 24.Nc4 Qxg3 25.Nxb6 gxh3 26.Qf3 hxg2+ 27.Qxg2 Qxg2+ 28.Kxg2
+cxb6 29.Rf1 Ke7 30.Re1+ Kd6 31.Rf1 Rc8 32.Rxf7 Rc7 33.Rf2 Ke5
+34.a4 Kd4 35.a5 Kxd3 36.Rf3+ Kc2 37.b4 b5 38.a6 Rc4 39.Rf7
+Rxb4 40.Rb7 Rg4+ 41.Kf3 b4 42.Rxa7 b3 0-1
+
+
+[Event "Ch World (corr.)"]
+[Site "corr."]
+[Date "1965.??.??"]
+[Round "2"]
+[White "Berliner Hans J (USA)"]
+[Black "Husak Karel (CZE)"]
+[Result "1/2-1/2"]
+[ECO "D87"]
+[WhiteElo "0"]
+[BlackElo "0"]
+[Annotator ""]
+[Source ""]
+[Remark ""]
+
+1.d4 Nf6 2.c4 g6 3.Nc3 d5 4.cxd5 Nxd5 5.e4 Nxc3 6.bxc3 Bg7 7.Bc4
+c5 8.Ne2 O-O 9.h4 cxd4 10.cxd4 Nc6 11.Be3 Na5 12.Bd5 Qd6 13.h5
+Be6 14.hxg6 hxg6 15.Bxe6 Qxe6 16.f3 Nc4 17.Bh6 Bxh6 18.Rxh6 Kg7
+19.Qc1 Qa6 20.Kf2 Rh8 21.Rxh8 Rxh8 22.Qc3 Rc8 23.Rc1 b5 24.d5+
+f6 25.Qd4 Qa3 26.Rh1 Ne5 27.Qe3 Qxe3+ 28.Kxe3 Rc2 29.Nd4 Nc4+
+30.Kd3 Rxg2 31.Nxb5 Ne5+ 32.Ke3 Rxa2 33.Rc1 f5 1/2-1/2
+
+
+[Event "Ch World (corr.)"]
+[Site "corr."]
+[Date "1965.??.??"]
+[Round "1"]
+[White "Berliner Hans J (USA)"]
+[Black "Hybl Jaroslav (CZE)"]
+[Result "1/2-1/2"]
+[ECO "D86"]
+[WhiteElo "0"]
+[BlackElo "2172"]
+[Annotator ""]
+[Source ""]
+[Remark ""]
+
+1.d4 Nf6 2.c4 g6 3.Nc3 d5 4.cxd5 Nxd5 5.e4 Nxc3 6.bxc3 Bg7 7.Bc4
+O-O 8.h4 c5 9.Ne2 cxd4 10.cxd4 Nc6 11.Be3 Na5 12.Bd3 Nc6 13.e5
+Qa5+ 14.Kf1 Rd8 15.h5 Be6 16.hxg6 hxg6 17.Rh4 Rd7 18.Qb1 Nxe5
+19.dxe5 Rad8 20.Nd4 Qxe5 21.Qc2 Rxd4 22.Rxd4 Rxd4 23.Bxd4 Qxd4
+24.Rd1 Qh4 1/2-1/2
+
+
+
+[Event "5th Correspondence World Championship"]
+[Site "ICCF"]
+[Date "1965.07.01"]
+[EventDate "1965.07.01"]
+[Round "13"]
+[Result "1-0"]
+[White "Hans Berliner"]
+[Black "Kenneth Charles Messere"]
+[ECO "D86"]
+[WhiteElo "0"]
+[BlackElo "0"]
+[PlyCount "43"]
+
+1.d4 Nf6 2.c4 g6 3.Nc3 d5 4.cxd5 Nxd5 5.e4 Nxc3 6.bxc3 Bg7
+7.Bc4 O-O 8.Ne2 b6 9.h4 e5 10.h5 exd4 11.hxg6 hxg6 12.cxd4 Qe7
+13.Qd3 Re8 14.Bh6 Nc6 15.Bxg7 Kxg7 16.Qd2 Qxe4 17.O-O-O Qe7
+18.Qh6+ Kf6 19.Rd3 Bg4 20.Rhh3 Nxd4 21.Rxd4 Bxe2 22.Rf4+ 1-0
+
+
+[Event "5th Correspondence World Championship"]
+[Site "ICCF"]
+[Date "1965.07.01"]
+[EventDate "1965.07.01"]
+[Round "7"]
+[Result "1-0"]
+[White "Hans Berliner"]
+[Black "Julius Nielsen"]
+[ECO "D35"]
+[WhiteElo "0"]
+[BlackElo "0"]
+[PlyCount "95"]
+
+1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.cxd5 exd5 5.Bg5 c6 6.e3 Nbd7 7.Bd3
+Be7 8.Nge2 O-O 9.Qc2 Re8 10.O-O Nf8 11.f3 h6 12.Bh4 Ne6
+13.Rad1 b6 14.Bf2 Qc7 15.Kh1 c5 16.Bg3 Qb7 17.Be5 Rd8 18.Ng3
+Ne8 19.Nf5 Bf6 20.f4 Nf8 21.Be2 cxd4 22.Bxd4 Be6 23.Bf3 Qc8
+24.e4 Ng6 25.Ne3 dxe4 26.Qxe4 Rxd4 27.Qxa8 Qxa8 28.Bxa8 Nxf4
+29.Bc6 Nc7 30.Ng4 Bxg4 31.Rxd4 Bxd4 32.Rxf4 Bxc3 33.bxc3 Be6
+34.Ra4 a5 35.c4 Kf8 36.c5 bxc5 37.Rxa5 Ke7 38.Kg1 Kd6 39.Bf3
+Nd5 40.Kf2 Nb4 41.a4 Bb3 42.Ra8 c4 43.a5 c3 44.Rc8 c2 45.Ke3
+Be6 46.Rc3 Bf5 47.Kd2 h5 48.Rc4 1-0
+
+
+[Event "5th Correspondence World Championship"]
+[Site "ICCF"]
+[Date "1965.07.01"]
+[EventDate "1965.07.01"]
+[Round "15"]
+[Result "1-0"]
+[White "Hans Berliner"]
+[Black "Sture Valentin Nyman"]
+[ECO "A56"]
+[WhiteElo "0"]
+[BlackElo "0"]
+[PlyCount "91"]
+
+1.d4 Nf6 2.c4 c5 3.d5 e5 4.Nc3 d6 5.e4 g6 6.Bd3 Bg7 7.Nge2 O-O
+8.f3 Na6 9.h4 Nc7 10.Bg5 h6 11.Be3 Bd7 12.Qd2 Kh7 13.h5 g5
+14.a3 b6 15.g4 Ng8 16.b4 Kh8 17.Kf2 Qf6 18.Kg2 Rfb8 19.Rhb1
+Qd8 20.Ra2 Qc8 21.Bc2 Bf8 22.Rab2 Ne8 23.Qd3 Ngf6 24.Ng3 Ng8
+25.Bf2 f6 26.Nf5 Ne7 27.Ne3 Qc7 28.Qd1 Kh7 29.Ba4 Nc8 30.Nf5
+Ng7 31.bxc5 Bxa4 32.cxb6 Qxc4 33.Nxa4 axb6 34.Rb4 Qc7 35.Nxg7
+Bxg7 36.Qb3 b5 37.Nc3 Na7 38.Nxb5 Nxb5 39.Rxb5 Rxb5 40.Qxb5
+Qc2 41.Rb4 Qa2 42.Qd7 Qxa3 43.Rb7 Rg8 44.Qe7 Qa8 45.Rd7 Qf8
+46.Qe6 1-0
+
+
+[Event "5th Correspondence World Championship"]
+[Site "ICCF"]
+[Date "1965.07.01"]
+[EventDate "1965.07.01"]
+[Round "8"]
+[Result "0-1"]
+[White "Josef Richter"]
+[Black "Hans Berliner"]
+[ECO "B03"]
+[WhiteElo "0"]
+[BlackElo "0"]
+[PlyCount "78"]
+
+1.e4 Nf6 2.e5 Nd5 3.d4 d6 4.c4 Nb6 5.exd6 cxd6 6.Nc3 g6 7.Bg5
+Bg7 8.Rc1 O-O 9.h3 Nc6 10.Nf3 h6 11.Be3 e5 12.d5 Ne7 13.Qb3
+Nf5 14.Bxb6 axb6 15.Be2 Nd4 16.Qd1 Nxf3+ 17.Bxf3 f5 18.Be2 e4
+19.O-O Qh4 20.Kh2 Be5+ 21.g3 Qg5 22.Kh1 f4 23.Bg4 fxg3 24.Nxe4
+Bxg4 25.Qxg4 Qxg4 26.hxg4 Rxa2 27.fxg3 Rxb2 28.Rxf8+ Kxf8
+29.g5 hxg5 30.Rf1+ Kg7 31.Nxg5 Bxg3 32.Rf7+ Kh6 33.Ne4 Be5
+34.Nf2 Kg5 35.Nd3 Rh2+ 36.Kg1 Bg3 37.Ne1 Rb2 38.Nd3 Rd2 39.Nc1
+Bf4 0-1
+
+
+[Event "Ch World (corr.)"]
+[Site "corr."]
+[Date "1965.??.??"]
+[Round "9"]
+[White "Berliner Hans J (USA)"]
+[Black "Rokhlin Yakov (RUS)"]
+[Result "1-0"]
+[ECO "E31"]
+[WhiteElo "0"]
+[BlackElo "0"]
+[Annotator ""]
+[Source ""]
+[Remark ""]
+
+1.d4 Nf6 2.c4 e6 3.Nc3 Bb4 4.Bg5 h6 5.Bh4 c5 6.d5 d6 7.e3 e5
+8.Qc2 Nbd7 9.Bd3 Qe7 10.f3 e4 11.Bxe4 g5 12.Bg3 Nxe4 13.fxe4
+Ne5 14.a3 Bxc3+ 15.Qxc3 f6 16.Bxe5 fxe5 17.Ne2 O-O 18.Ng3 Bg4
+19.Rf1 Rxf1+ 20.Kxf1 Rf8+ 21.Kg1 h5 22.Qc2 Qh7 23.Rf1 Rxf1+ 24.Kxf1
+h4 25.Nf5 Bxf5 26.exf5 g4 27.Qf2 Qh6 28.Ke2 Kf7 29.Kd3 Qg5 30.b4
+b6 31.bxc5 bxc5 32.Kc2 Kf6 33.e4 Kf7 34.Kb3 Qc1 35.Qe2 Qf4 36.h3
+gxh3 37.gxh3 Ke7 38.Qh5 Qc1 39.Qxh4+ Kd7 40.Qh7+ Kd8 41.Qg8+
+Kc7 42.Qg7+ Kb6 43.Qg2 Qb1+ 44.Kc3 Qc1+ 45.Qc2 Qe3+ 46.Qd3 Qf4 1-0
+
+
+[Event "5th Correspondence World Championship"]
+[Site "ICCF"]
+[Date "1965.07.01"]
+[EventDate "1965.07.01"]
+[Round "11"]
+[Result "0-1"]
+[White "Werner Stern"]
+[Black "Hans Berliner"]
+[ECO "B04"]
+[WhiteElo "0"]
+[BlackElo "0"]
+[PlyCount "40"]
+
+1.e4 Nf6 2.e5 Nd5 3.d4 d6 4.Nf3 g6 5.Ng5 dxe5 6.dxe5 Bg7 7.Bc4
+c6 8.Nc3 h6 9.Nxf7 Kxf7 10.Nxd5 cxd5 11.Bxd5+ Ke8 12.e6 Rf8
+13.Qg4 Rf6 14.Qc4 Na6 15.Be3 Qa5+ 16.Bd2 Qb6 17.Bc3 Qxf2+
+18.Kd1 Bxe6 19.Bxf6 Rd8 20.Bh4 Qb6 0-1
+
+
+
+[Event "5th Correspondence World Championship"]
+[Site "ICCF"]
+[Date "1965.07.01"]
+[EventDate "1965.07.01"]
+[Round "3"]
+[Result "1/2-1/2"]
+[White "Hans Berliner"]
+[Black "Vladimir Zagorovsky"]
+[ECO "D35"]
+[WhiteElo "0"]
+[BlackElo "0"]
+[PlyCount "76"]
+
+1.d4 Nf6 2.c4 e6 3.Nc3 d5 4.cxd5 exd5 5.Bg5 Be7 6.e3 O-O 7.Bd3
+Nbd7 8.Nge2 Re8 9.O-O c6 10.Qc2 Nf8 11.f3 Ng6 12.e4 dxe4
+13.fxe4 Be6 14.Bxf6 Bxf6 15.e5 Be7 16.Rad1 Bf8 17.Kh1 Qh4
+18.g3 Qh6 19.Nf4 Nxf4 20.gxf4 Bg4 21.Be2 Bh3 22.Rf3 Rad8
+23.Rg3 Kh8 24.f5 g6 25.f6 Be6 26.Bg4 Bxg4 27.Rxg4 Qh5 28.Qe2
+h6 29.Re4 Qf5 30.Rf1 Qe6 31.Qg2 h5 32.Qf3 Bh6 33.Rd1 Kh7
+34.Ree1 Rd7 35.b3 Red8 36.Ne4 b6 37.Nd6 Bf8 38.Ne4 Bh6 1/2-1/2
+
+
+
+
