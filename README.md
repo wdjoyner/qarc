@@ -31,7 +31,7 @@ Each game is presented as its own chapter with: (1) clean **game metadata** and 
 
 | File | Contents |
 |---|---|
-| `CGA-chess-game-analyzer-manual.pdf` / `CGA_chess-game-analyzer-manual.tex` | User manual for CGA |
+| `CGA-chess-game-analyzer-manual.pdf` / `.tex` | User manual for CGA |
 | `berliner-games-1965-world-corr-ch.pgn` | Source PGN: Berliner's 16 games, 5th ICCF World Championship |
 | `berliner-games-1965-world-corr-champ-book.pdf` / `.tex` | QARC book of those games |
 | `carlsen-vs-caruana-match_WCC2018-2018-11-london_qarc.pdf` / `.tex` | QARC report of the 12 games of the 2018 World Championship |
