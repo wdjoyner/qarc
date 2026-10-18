@@ -10,6 +10,7 @@
 \usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage{float}
+\usepackage{graphicx}
 
 % Custom colors for move quality
 \definecolor{brilliantcolor}{RGB}{0, 150, 150}
@@ -19,7 +20,7 @@
 \definecolor{mistakecolor}{RGB}{220, 120, 0}
 \definecolor{blundercolor}{RGB}{200, 0, 0}
 
-\def\FEN{\tt{FEN}}
+\newcommand{\FEN}{\texttt{FEN}}
 \def\qqq{\mathbb{Q}}
 \def\rrr{\mathbb{R}}
 \def\zzz{\mathbb{Z}}
@@ -29,7 +30,7 @@
 \title{Chess Game Analyzer,\\
 an introduction}
 \author{David Joyner}
-\date{2026-02-02}
+\date{2026-10-18}
 
 \begin{document}
 \maketitle
@@ -41,7 +42,7 @@ an introduction}
 
 \chapter*{Preface}
 
-This is a guide of how to use a program I wrote to
+This is a guide to using a program I wrote to
 analyze chess games you input (as a pgn file on your computer)
 called the {\it chess game analyzer}, or {\it CGA} \cite{CGA26}.
 The program uses other chess programs to output a
@@ -49,9 +50,9 @@ math-dense LaTeX file, called a
 {\it Quantitative-Analytic Report on Chess} (or QARC),
 where the results from those other programs are collected
 in a human-readable format. Full disclosure: For creating CGA,
-I did get a lot of help from AI: {\tt gemini} (Google) for
-chess-theoretic questions, {\tt chatGPT} (openAI) for outline ideas,
-and {\tt claude} (Anthropic) for Python questions.
+I did get a lot of help from AI: {\tt Gemini} (Google) for
+chess-theoretic questions, {\tt ChatGPT} (OpenAI) for outline ideas,
+and {\tt Claude} (Anthropic) for Python questions.
 
 The CGA is a Python module providing
 an advanced chess analysis pipeline that goes beyond piece
@@ -61,7 +62,7 @@ LaTeX reports on chess games, machine-readable data, and
 win-prediction metrics.
 In addition to generating educational content, it collects
 useful game data into tables, and computes
-``Fireteam Index'' (or FTI, defined below) signatures.
+an experimental ``Fireteam Index'' (or FTI, defined below).
 As we will see below, the FTI is a family of metrics inspired by
 the medieval board game rithmomachia \cite{Ri25} to measure
 sustained positional dominance.
@@ -71,8 +72,9 @@ programs\footnote{For instance, CGA has an add-on that creates
 animated gifs of games, but such add-ons will be discussed separately.},
 was inspired by the ``territorial'' approach that proper
 victories take in rithmomachia. Can such an approach be helpful in
-chess analysis? Maybe more refinements to CGA are needed before I can answer
-that, but that question is the main motivation for this work.
+chess analysis? That question is the main motivation for this work, and
+chapter~\ref{chap:testing-fti} gives a partial answer: some rithmomachia
+principles help with chess and some do not.
 
 Another goal was to create ``Prediction Algorithms'' for chess games
 in the hope of predicting a win during live play.
@@ -98,7 +100,7 @@ predict game outcomes:
   {\tt Windowed}
  \begin{itemize}
  \item
- This is a ``smoothed'' version of {\tt Ply}.
+ This is a ``smoothed'' version of {\tt Per-Ply}.
  \item
   Computes a 10-ply rolling average of FTI, FTI$_{10}$ say.
  \item
@@ -114,9 +116,11 @@ predict game outcomes:
  \item
  Counts plies where FTI $> \epsilon$ versus FTI $<- \epsilon$
  \item
- Measures volatility (sign changes in the difference between these counts)
+ Measures volatility $V$ (the number of times the FTI switches between
+ favoring one side and favoring the other)
  \item
-   Computes confidence = $|B_n|\cdot (1 - V/V_{\rm max})$
+   Computes confidence = $|B_n|\cdot \max(0,\, 1 - V/V_{\rm thr})$,
+   where $V_{\rm thr}$ is $0.2$ times the number of plies considered
 \item   
   Predicts {\it draw} if confidence $<0.15$; otherwise {\it win/loss}
   (that is, not a draw).
@@ -124,6 +128,12 @@ predict game outcomes:
   Best at detecting drawn games and balanced struggles
  \end{itemize}
  \end{itemize}
+
+\noindent
+As chapter~\ref{chap:testing-fti} explains, on the games tested so far these
+algorithms do not predict results better than simple baselines, such as
+always predicting the more common result, or the same rule applied to
+{\tt Stockfish}'s evaluation.
 
 The example games are well-known and well-analyzed, so you can
 compare CGA analysis here with the GM analysis published already
@@ -165,11 +175,12 @@ of the best
 \item  
 Brilliant sacrifice detection with sound/speculative classification
 \item  
-Five different Fireteam Index metrics capturing different playing styles
+An experimental Fireteam Index (FTI) combining the four metrics, in five weightings
 \item
-Other metrics, such as Balance and Volatility, measure liklihood of a draw.
+Balance and Volatility, intended to detect drawn games
 \item  
-Three prediction algorithms (Per-Ply, Windowed, Balance) for win or draw predictions.
+Three experimental prediction algorithms (Per-Ply, Windowed, Balance) for win or draw
+predictions, with held-out tests in book mode showing how well they work
 \item  
 Publication-quality LaTeX output with chess diagrams, plots, and methodology
 \item  
@@ -212,7 +223,7 @@ algorithmic perspective the computer player takes.
 
 A real-valued function $m:\FEN\to\rrr$
 that takes in a position of a chess game and
-returns a positive number is called a {\it chess metric}.
+returns a real number is called a {\it chess metric}.
 Here, $\FEN$ simply denotes the collection of
 all possible FEN positions\footnote{FEN stands for
 Forsyth–Edwards Notation, a standard notation for describing a
@@ -226,7 +237,7 @@ One easy metric all players use is the {\it piece value metric}
 for White and for Black: $PV_W({\rm fen})$ denotes the total value
 of the white pieces in the position ${\rm fen}$,
 and $PV_B({\rm fen})$  using the standard values for the Black pieces
-in the give position.
+in the given position.
 Most players use the usual values\footnote{For more background
 on the different ways to evaluate chess pieces, and there
 are quite a lot of them, see 
@@ -248,17 +259,17 @@ pawn & $1$ \\ \hline
 
 \noindent
 The reader can check that, in the game's starting position,
-we have
+not counting the kings, we have
 
 \[
-P_W({\rm start}) = P_B({\rm start}) = 39.
+PV_W({\rm start}) = PV_B({\rm start}) = 39.
 \]
 
 Another example is a chess metric we'll denote
 by {\tt eval}, the evaluation metric from
 the chess engine {\tt Stockfish}.
 This positional metric measures advantages (including piece values) in
-{\it centipawns} (cp) —-- hundredths of a pawn.
+{\it centipawns} (cp)---hundredths of a pawn.
 An evaluation of $+100$ (that is, ${\tt eval}({\rm fen})>100$)
 means White is ahead in the given \FEN position
 by the positional equivalent of roughly one pawn. An evaluation of
@@ -276,7 +287,7 @@ $\pm 10000$ & Checkmate is forced \\
 \end{tabular}
 \end{center}
 
-The modern {\tt Stockfish} versions primarily uses NNUE (neural network)
+The modern {\tt Stockfish} versions primarily use NNUE (neural network)
 evaluation to compute {\tt eval}. Unfortunately, that metric is a bit of
 a black box. It appears to be impossible, or at least very impractical, to
 directly extract from the modern {\tt Stockfish} other,
@@ -285,22 +296,22 @@ more ``territorial'' metrics such as Space.
 Let's dive into that topic next.
 
 
-\section{The five core metrics}
+\section{The positional metrics}
 
 The {\tt Stockfish} evaluation {\tt eval} tells the story, metrics explain why.
 
 As mentioned,
 the modern {\tt Stockfish} {\tt eval} is a bit of a black box.
 
-Given a chess position, who do we think of it from a territorial
+Given a chess position, how do we think of it from a territorial
 perspective? These natural questions arise:
 
 \begin{itemize}
 \item
-How to we compute the ``space'' controlled by a given side?
+How do we compute the ``space'' controlled by a given side?
 
 \item
-How to we compute the ``mobility'' of pieces in the position?
+How do we compute the ``mobility'' of pieces in the position?
 
 \item
 How do we compute the safety of the king?
@@ -323,11 +334,11 @@ These formulas are designed to address these questions.
 
 \subsection{Data model and metric plots}
 
-Raw positional data fields are printied to the bottom of
-the latex QARC file (but does not appear in the
-compiled pdf). CGA uses this data to plot various chess metrics.
+Raw positional data fields are printed at the bottom of
+the \LaTeX{} QARC file, after \verb|\end{document}|, so they do not appear in the
+compiled PDF. CGA uses this data to plot various chess metrics.
 
-The plots of the metrics are either Per-ply or Windowed.
+The FTI plots come in two versions, Per-ply and Windowed.
 
 \begin{itemize}
 \item
@@ -341,17 +352,14 @@ Windowed/Smoothed: Uses a 10-ply rolling average to filter out tactical noise.
 
 ``How much `room' do your pawns give your pieces to move in the center?''
 
-Space evaluation counts squares in the center (files c-f, ranks 2-4 for White, 5-7 for Black) that are:
+Space evaluation counts squares in the center (files c--f, ranks 2--4 for White, 5--7 for Black) that are:
 \begin{enumerate}
 \item Attacked by at least one friendly pawn, {\it and}
 \item Not occupied by any enemy piece
 \end{enumerate}
 
-The computation is weighted by the number of pieces behind the pawn
-chain --- this rewards positions where you control territory {\it and}
-have pieces active in that space.
-The Space term is scaled by total piece count; it matters more in
-closed positions with many pieces.
+The count is divided by 10, so Space ranges from $0$ to $1.2$
+(there are 12 such squares per side); typical values are $0.1$ to $0.7$.
 
 Space is a middlegame metric --- it becomes near-meaningless in endgames when
 most pieces are traded.
@@ -361,31 +369,27 @@ most pieces are traded.
 ``How many useful squares can your pieces actually land on? (More squares = more power)''
 
 
-Mobility counts legal moves for each piece type, with different weights:
-\begin{itemize}
-\item \textbf{Knights}: Safe squares attacked (excluding squares defended by enemy pawns)
-\item \textbf{Bishops}: Safe squares on diagonals (bonus for long, unobstructed diagonals)
-\item \textbf{Rooks}: Squares on files/ranks (bonus for open files, 7th rank penetration)
-\item \textbf{Queens}: Combination of bishop and rook mobility patterns
-\end{itemize}
-
-``Safe squares" exclude those defended by enemy pawns or where exchanges would lose material.
-Mobility in the opponent's territory is valued higher than mobility in your own.
+Mobility adds $0.1$ for every square attacked by one of your pieces
+(pawns included, the king excluded) that is {\it not} attacked by an enemy pawn.
+A square attacked by two of your pieces counts twice, and squares occupied
+by your own pieces count too, so Mobility rewards coordination as well as
+freedom of movement. All piece types are weighted equally.
+(QARC reports made before October 2026 show half of this value in their
+tables and plots, because of a since-fixed bug; see the appendix.)
 
 Mobility tracks piece activity. Watch it climb during development and converge as
-long-range pieces (bishops, rooks, queens) are trade off.
+long-range pieces (bishops, rooks, queens) are traded off.
   
 \subsection{King Safety}
 
-`How well is your King shielded by pawns, and how many enemy `attack units' are nearby?''
+``How well is your King shielded by pawns, and how many nearby squares does the enemy attack?''
 
-King safety combines several factors:
+King safety combines two factors:
 \begin{itemize}
-\item \textbf{Pawn shield}: Pawns on 2nd/3rd rank directly in front of the castled king
-\item \textbf{King geometry}: Distance of enemy pieces to your king.
-  
-\item \textbf{Attack units}: Count of enemy pieces attacking squares adjacent to your king
-\item \textbf{Safe checks}: Number of safe checking squares available to the opponent
+\item \textbf{Pawn shield}: $+0.5$ for each friendly pawn on the 2nd rank
+  (7th rank for Black) on the king's file or an adjacent file
+\item \textbf{Attacked squares near the king}: $-0.2$ for each square within
+  two squares of the king (a $5\times 5$ box) that an enemy piece attacks
 \end{itemize}
 
 King Safety can be positive and negative. Negative values in the middlegame mean danger. Negative values in the endgame can mean active, fighting kings.
@@ -397,10 +401,11 @@ pieces?''
 
 Threat evaluation considers:
 \begin{itemize}
-\item Hanging pieces (attacked but not adequately defended)
-\item Safe pawn advances that create threats
-\item Minor pieces attacking major pieces
-\item Weak squares in the pawn structure
+\item Hanging pieces (attacked but not defended)
+\item Pieces attacked by lower-value pieces (for example, a knight attacking a rook)
+\item Attacks on the squares around the enemy king
+\item Safe checks available
+\item Weak squares (holes) in the enemy pawn structure
 \end{itemize}
 
 Threats measures potential piece captures. High threat values show tension;
@@ -411,12 +416,12 @@ have been made.
 \begin{example}
 For example, the $-319$cp blunder at move 15 in \S \ref{sec:estrin-berliner-15Be2}
 below shows what happened but the Mobility and Threats changes in moves 8-14
-show why the position was ripe for sharp play form both sides.
+show why the position was ripe for sharp play from both sides.
 \end{example}
 
-\subsection{The Fireteam Index signature}
+\subsection{The Fireteam Index (experimental)}
 
-This is a linear combination of those four metrics above.
+This is a weighted sum of the differences (player minus opponent) of the four metrics above.
 
 The Fireteam Index is a composite metric inspired by the ancient mathematical
 board game {rithmomachia}, where a ``progression victory'' is achieved when a
@@ -424,9 +429,12 @@ coordinated group of pieces (a ``fireteam'') establishes control deep in enemy
 territory \cite{Ri25}. Similarly, in chess, sustained positional dominance
 across multiple factors often precedes victory.
 
-The FTI weights can be thought of as \emph{signatures} that capture different
-playing styles. By adjusting which positional factors receive emphasis,
-the FTI can be tuned to better predict outcomes for players with different strategic preferences.
+CGA provides five weightings of the FTI, named for the kind of play they
+emphasize (see the appendix). The original hope was that these weightings would
+act as \emph{signatures} of different playing styles, and that a player who keeps
+the FTI positive for long enough is on the way to winning.
+Chapter~\ref{chap:testing-fti} tests both ideas; on the games tested so far,
+neither holds up.
 
 
 
@@ -436,12 +444,13 @@ Balance is the key draw-detection metric. It combines:
 
 \begin{itemize}
 \item
-Normalized Balance ($B_n$): What fraction of positions favored each side
+Normalized Balance ($B_n$): the number of plies with FTI $> \epsilon$, minus
+the number with FTI $< -\epsilon$, divided by the number of plies considered
 \item
 Volatility (V): How often the advantage changed hands
 \item
-Confidence (C): $C=B_n\cdot (1 - V/V_{\rm max})$, where $V_{\rm max}$ is
-the maximum volatility for that game.
+Confidence (C): $C=|B_n|\cdot \max(0,\, 1 - V/V_{\rm thr})$, where $V_{\rm thr}$ is
+$0.2$ times the number of plies considered.
 \end{itemize}
 
 The idea is that
@@ -449,7 +458,8 @@ if the positional metrics are roughly equal for most of the game
 then neither side dominated the Space/Mobility/Threats picture consistently.
 Similarly, high volatility means the advantage kept changing hands
 during the course of the game. The {\it Balance algorithm} will predict
-the game ends in a draw if $|B_n|<0.2$ or $V \geq 10$.
+the game ends in a draw if $C < 0.15$; otherwise it predicts a win
+for the side favored by $B_n$.
 This data is part of the QARC output.
 
 \chapter{Examples}
@@ -479,8 +489,8 @@ Estrin is best known for being the seventh ICCF World Champion a few
 years later, in 1972–1976.
 
 Black, played by American Hans Berliner, was also a well-known chess player.
-Here is a quotation from Dunne's rememberance article for
-Has Berliner written for {\bf Chess Life} \cite{Du17}:
+Here is a quotation from Dunne's remembrance article for
+Hans Berliner written for {\bf Chess Life} \cite{Du17}:
 
 \begin{quotation}
 The finals of the Fifth World Correspondence Chess Championship
@@ -514,8 +524,8 @@ This is the famous Two Knights Defense with the Fried Liver Attack.
 Estrin plays 4.Ng5,
 immediately creating tension. Let's see how the metrics capture this.
 
-Notice how Space remains roughly equal at 0.40 for both sides through move 9.
-Space measures control of central squares backed by your pawns —- essentially,
+Notice how Space stays roughly equal, between 0.30 and 0.40 for both sides, through move 9.
+Space measures control of central squares backed by your pawns---essentially,
 how much room your pieces have to maneuver.
 After
 
@@ -528,7 +538,7 @@ After
 \vskip .1in
 \noindent
 White captures a pawn but Black will strike back. Watch what happens after
-5...b5 --— the Ulvestad Variation.
+5...b5---the Ulvestad Variation.
 The usual move in this position is 5. ... Na5.
 
 %\begin{center}
@@ -568,7 +578,7 @@ Data at ply 10/move 5:
 Eval: +0.45
 %\end{itemize}
 
-Look at the Threats metric -— White's threats spike to 10.80 because the b5-pawn is hanging.
+Look at the Threats metric---White's threats spike to 10.80 because the b5-pawn is hanging.
 But if you compare Black's Mobility to White's, you see
 Berliner is accepting material deficit for piece activity.
 
@@ -653,7 +663,7 @@ Black loses 67cp. Consider instead: Bd7, Be6, Bd6.
 
 \vskip .1in
 \noindent
-This sets up a crutial position.
+This sets up a crucial position.
 
 
 \subsection{The blunder}
@@ -695,7 +705,7 @@ Stockfish recommends 15 Bf1 or else 15 a4.
 \end{figure}
 \end{center}
 
-Data at ply 31:
+Data at ply 29/move 15:
 
 %\begin{itemize}
 %\item  
@@ -807,9 +817,9 @@ Eval: -1.21
 
 \vskip .1in
 \noindent
-This is a more serious error, but not of the same magniture as 15 Be2??.
+This is a more serious error, but not of the same magnitude as 15 Be2??.
 With 34. a4??, {\tt eval} drops from $-2.24$ to $-4.01$.
-Here, {\it Stockfish} recommends instead Rf8.
+Here, {\tt Stockfish} recommends instead Rf8.
 
 \vskip .1in
 \noindent
@@ -830,7 +840,7 @@ The final moves of the game.
 
 \vskip .1in
 \noindent
-{\tt Stockfish} suggests instead Kh3 or Kf3.
+{\tt Stockfish} suggests instead Kh3.
 
 \vskip .1in
 \noindent
@@ -843,94 +853,40 @@ The final moves of the game.
 
 \subsection{FTI summary}
 
-The various types of FTIs are designed to characterize the type of play.
-Recall that the FTI metric is a linear combination of the four positional metrics,
+Recall that the FTI is a weighted sum of the differences
+(player minus opponent) in the four positional metrics,
 Space (S), Mobility (M), King Safety (KS), and Threats (T):
 
 \[
-FTI = w_SS + w_M M + w_{KS}KS + w_T T.
+FTI = w_S\,\Delta S + w_M\,\Delta M + w_{KS}\,\Delta KS + w_T\,\Delta T',
 \]
+where $T' = T/20$ (see the appendix).
 Think of the FTI as a coordinated pressure gauge.
-Using it to predict a game's outcome requires a player to hold
-positional dominance for 10 consecutive 'plies' (half-moves)
-to predict a win. For the Estrin-Berliner game, predicting the outcome
-(win/loss/draw) using Fireteam Indices is a struggle because the game was so volatile.
+Figure~\ref{fig:estrin-berliner-1965-FTI1} shows FTI1, which weights the four
+metrics equally.
 
-
-In this case, CGA was run over all the games Berliner played for the
-1965 World Correspondence Chess championship. The CGA program computes the
-weights $(w_S, w_M, w_{KS}, w_T)$ such that the FTI with those
-``signature'' weights, the plot predicts the outcomes more successfully than
-any other choices. The outcome was
-
-\[
-(w_S, w_M, w_{KS}, w_T) = ( 0.319,  0.675,  0.003,  0.003 ),
-\]
-with $R^2 = -12.525$ (indicating a poor fit).
-
-Either by looking at the plots for FTI3 and FTI5 or that signature FTI plot,
-we see CGA suggests Berliner has a solid, strategic style.
-
-
-\begin{center}
 \begin{figure}[H]
-\begin{minipage}{\textwidth}
 \begin{center}
-%\begin{tabular}{c}
-%\hspace{4.0 cm}
-%\vspace{1.0 cm}
 \includegraphics[height=7cm,width=12cm]{estrin-berliner-1965-FTI1.png}
 \end{center}
-%\\
-\begin{center}
-%\hspace{4.0 cm}
-\includegraphics[height=7cm,width=12cm]{estrin-berliner-1965-FTI2.png}
-%\end{tabular}
-\end{center}
-\end{minipage}
-\caption{Both plots are for Estrin-Berliner, 1965. (top) Fireteam index, FTI1 (harmonious). (bottom) Fireteam index, FTI2 (tactical). The second plot never exceeds the confidence threshold of $\pm 0.2$.}
-\label{fig:estrin-berliner-1965-FTI1+2}
+\caption{Fireteam index FTI1 (equal weights) for Estrin-Berliner, 1965.}
+\label{fig:estrin-berliner-1965-FTI1}
 \end{figure}
-\end{center}
 
-\begin{center}
-\begin{figure}[H]
-\begin{minipage}{\textwidth}
-\begin{center}
-%\begin{tabular}{c}
-%\hspace{4.0 cm}
-%\vspace{1.0 cm}
-\includegraphics[height=7cm,width=12cm]{estrin-berliner-1965-FTI3.png}
-\end{center}
-%\\
-\begin{center}
-%\hspace{4.0 cm}
-\includegraphics[height=7cm,width=12cm]{estrin-berliner-1965-FTI4.png}
-%\end{tabular}
-\end{center}
-%\\
-\begin{center}
-%\hspace{4.0 cm}
-\includegraphics[height=7cm,width=12cm]{estrin-berliner-1965-FTI5.png}
-%\end{tabular}
-\end{center}
-\end{minipage}
-\caption{These plots are also for Estrin-Berliner, 1965. (top) Fireteam index, FTI3 (strategic). (middle) Fireteam index, FTI4 (dynamic). (bottom) Fireteam index, FTI5 (solid).}
-\label{fig:estrin-berliner-1965-FTI3+4+5}
-\end{figure}
-\end{center}
-
-Of all the FTI plots in Figures \ref{fig:estrin-berliner-1965-FTI1+2}
-and \ref{fig:estrin-berliner-1965-FTI3+4+5}, the last one is the one that
-most strongly suggests a win for Black. FTI1 and FTI3 also do suggest a
-Black win, but with less confidence.
-
+The game was so volatile that the FTI swings back and forth.
+With the current version of CGA, the Per-ply rule (dominance for 10 consecutive
+plies) does not predict Black's win with any of the five weightings; the
+Windowed rule does with FTI1 and FTI4.
+More importantly, across all 16 of Berliner's games in this championship, the
+tests in chapter~\ref{chap:testing-fti} find no evidence that the FTI predicts
+results better than simple baselines, or that any weighting of it describes
+Berliner's style.
 
 \section{Carlsen-Caruana, Game 6, 2018}
 \label{sec:carlsen-caruana_game6-2018}
 
 At this point in the match, the players were tied
-2.5-2.5, with 5 draws in a row. This game was another draw but exciting none-the-less.
+2.5-2.5, with 5 draws in a row. This game was another draw but exciting nonetheless.
 In fact, on move 67 it appears Caruana missed a win.
 
 The QARC file on the $12$ games in the Carlsen-Caruana match, London
@@ -944,10 +900,10 @@ Of course, both players are well-known.
 In 2018, the 27-year-old Norwegian was the undisputed king of chess,
 having held the World Championship title since 2013 and the world
 No. 1 ranking since 2011.
-The 26-year-old American-Italian grandmaster, in 2018, became
+The 26-year-old Italian-American grandmaster, in 2018, became
 the first American to challenge for the undisputed world chess title since
 Bobby Fischer in 1972.
-At the time of their match, their ELO ratings were nearly the same.
+At the time of their match, their Elo ratings were nearly the same.
 
 
 \subsection{The early opening moves (1-4)}
@@ -1238,7 +1194,7 @@ dropping piece Mobility but escalating Threats.
 \vskip .1in
 
 \noindent
-{\tt Stockfish} didn't like Carlsen's move and suggest to consider instead Nd1 or Nf1 or Nc2.
+{\tt Stockfish} didn't like Carlsen's move and suggests considering Nd1, Nf1, or Nc2 instead.
 
 \vskip .1in
 
@@ -1337,7 +1293,7 @@ Black has a winning advantage at this point, according to
 \vskip .1in
 
 \noindent
-This is, according to {\tt Stockfish} a blunder, recommending instead Bh4.
+According to {\tt Stockfish}, this is a blunder; it recommends Bh4 instead.
 According to {\tt Stockfish}, with depth=23, with this knight move Caruana missed a win.
 
 \begin{center}
@@ -1395,91 +1351,186 @@ The game concluded this way:
 
 \subsection{FTI summary}
 
-The various types of FTIs are designed to characterize the type of play.
-Recall that the FTI metric is a linear combination of the four positional metrics,
-Space (S), Mobility (M), King Safety (KS), and Threats (T):
+Figure~\ref{fig:carlsen-caruana-2018-FTI1} shows FTI1 (equal weights) for this game.
 
-\[
-FTI = w_SS + w_M M + w_{KS}KS + w_T T.
-\]
-Think of the FTI as a coordinated pressure gauge.
-Using it to predict a game's outcome requires a player to hold
-positional dominance for 10 consecutive 'plies' (half-moves)
-to predict a win. For the Carlsen-Caruana match, predicting the outcome
-(win/loss/draw) using Fireteam Indices is a struggle because the game was so
-well-played that the advantages according to most metrics were small.
-
-
-In this case, CGA was run over all $12$ games Carlsen and Caruana played for the
-2018 World Chess championships. The CGA program computes the
-weights $(w_S, w_M, w_{KS}, w_T)$ such that, over all those games,
-the FTI with those ``signature'' weights predicts the outcome
-more successfully than any other choices. The outcome was
-
-\[
-(w_S, w_M, w_{KS}, w_T) = ( 0.0,  0.0,  0.0,  1.0 ),
-\]
-with $R^2 = 0$ (indicating a failure of linear regression to find a line
-of ``best'' fit).
-
-Either by looking at the plots for FTI1 and FTI5,
-we see CGA suggests Caruana should have won the game and plays with
-a solid, harmonious style.
-
-
-\begin{center}
 \begin{figure}[H]
-\begin{minipage}{\textwidth}
 \begin{center}
-%\begin{tabular}{c}
-%\hspace{4.0 cm}
-%\vspace{1.0 cm}
 \includegraphics[height=7cm,width=12cm]{carlsen-caruana-2018-FTI1.png}
 \end{center}
-%\\
-\begin{center}
-%\hspace{4.0 cm}
-\includegraphics[height=7cm,width=12cm]{carlsen-caruana-2018-FTI2.png}
-%\end{tabular}
-\end{center}
-\end{minipage}
-\caption{Both plots are for game 6 of Carlsen-Caruana, 2018. (top) Fireteam index, FTI1 (harmonious). (bottom) Fireteam index, FTI2 (tactical). The second plot never exceeds the confidence threshold of $\pm 0.2$.}
-\label{fig:carlsen-caruana-2018-FTI1+2}
+\caption{Fireteam index FTI1 (equal weights) for game 6 of Carlsen-Caruana, 2018.}
+\label{fig:carlsen-caruana-2018-FTI1}
 \end{figure}
-\end{center}
 
-\begin{center}
-\begin{figure}[H]
-\begin{minipage}{\textwidth}
-\begin{center}
-%\begin{tabular}{c}
-%\hspace{4.0 cm}
-%\vspace{1.0 cm}
-\includegraphics[height=7cm,width=10cm]{carlsen-caruana-2018-FTI3.png}
-\end{center}
-%\\
-\begin{center}
-%\hspace{4.0 cm}
-\includegraphics[height=7cm,width=12cm]{carlsen-caruana-2018-FTI4.png}
-%\end{tabular}
-\end{center}
-%\\
-\begin{center}
-%\hspace{4.0 cm}
-\includegraphics[height=7cm,width=12cm]{carlsen-caruana-2018-FTI5.png}
-%\end{tabular}
-\end{center}
-\end{minipage}
-\caption{These plots are also for game 6 of Carlsen-Caruana, 2018. (top) Fireteam index, FTI3 (strategic). (middle) Fireteam index, FTI4 (dynamic). (bottom) Fireteam index, FTI5 (solid).}
-\label{fig:carlsen-caruana-2018-FTI3+4+5}
-\end{figure}
-\end{center}
+All twelve classical games of this match were drawn, so the FTI cannot be tested
+as a predictor of results on this match: there is no variation in results to
+learn from. (An earlier version of this manual reported ``optimal'' weights
+$(0, 0, 0, 1)$ with $R^2 = 0$ for this match; those numbers were an artifact of
+fitting weights to twelve identical results.)
 
-\vskip .1in
-Of all the FTI plots in Figures \ref{fig:carlsen-caruana-2018-FTI1+2}
-and \ref{fig:carlsen-caruana-2018-FTI3+4+5}, the first and last one 
-most strongly suggests a win for Black. The other FTIs also suggest a
-Black win, but with less confidence.
+Chapter~\ref{chap:testing-fti} asks a different question of this match: given
+several near-equal moves, do Carlsen and Caruana choose differently, as measured
+by the four metrics? They do not. A model fitted to Caruana's choices predicts
+Carlsen's as well as Carlsen's own model does, and vice versa.
+
+\chapter{Testing the Fireteam Index}
+\label{chap:testing-fti}
+
+The FTI was built on a rithmomachia idea: a coordinated group of pieces
+(a ``fireteam'') that establishes control deep in enemy territory, and holds
+it, is on the way to victory. This chapter tests two consequences of that idea
+on the games in this manual:
+\begin{enumerate}
+\item sustained FTI dominance predicts the result of a game, and
+\item the FTI weights capture a player's style, so they could be used to
+  predict the kind of move a player will choose.
+\end{enumerate}
+The short answer is that some rithmomachia principles help with chess and some
+do not.
+
+\section{Does sustained dominance predict the result?}
+
+Berliner scored 12 wins and 4 draws in his 16 games of the 5th World
+Correspondence Championship \cite{Be65}. Table~\ref{tab:outcome-tests}
+compares the FTI prediction rules with two baselines: always predicting a
+Berliner win, and the same 10-ply streak rule applied to {\tt Stockfish}'s
+evaluation (Berliner more than one pawn ahead). The last row refits the
+FTI weights 16 times, each time leaving one game out and predicting it.
+The ``first half'' column uses only the first half of each game, which is
+the useful case for prediction: by the end of a game, the evaluation nearly
+shows the result. All numbers were computed with the current version of CGA
+from the raw data in \cite{Be65}.
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Method} & \textbf{Whole games} & \textbf{First half only} \\
+\midrule
+Always predict a Berliner win & 12/16 & 12/16 \\
+Streak rule on {\tt Stockfish}'s evaluation & 15/16 & 8/16 \\
+FTI1 (Harmonious), Per-ply rule & 7/16 & 6/16 \\
+FTI2 (Tactical), Per-ply rule & 7/16 & 6/16 \\
+FTI3 (Strategic), Per-ply rule & 8/16 & 6/16 \\
+FTI4 (Dynamic), Per-ply rule & 11/16 & 8/16 \\
+FTI5 (Solid), Per-ply rule & 7/16 & 5/16 \\
+FTI weights refit with the game held out & 13/16 & 11/15$^*$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\caption{Correct predictions of Berliner's results. $^*$One game's first half is entirely within the first 16 plies, which the FTI ignores.}
+\label{tab:outcome-tests}
+\end{table}
+
+No FTI rule beats simply predicting a Berliner win every time. The FTI is
+also only weakly related to the evaluation: across all positions after ply 16,
+the correlation between FTI1 and {\tt Stockfish}'s evaluation is $0.26$.
+For the 2018 Carlsen-Caruana match no such test is possible, because all
+twelve games were drawn.
+
+In book mode, CGA now runs the held-out test (the last row) on every
+collection, in place of the ``empirically optimal weights'' that earlier
+versions printed. Those weights and their $R^2$ values (for example,
+$R^2 = -12.5$ for Berliner's games) were not meaningful: the fit had no
+constant term, and its weights were clipped and rescaled afterwards.
+
+\section{Do the FTI weights describe a playing style?}
+
+Results are a poor guide to style: they mostly reflect who made fewer
+mistakes. A better guide is the moves a player chooses. In many positions,
+{\tt Stockfish} rates several moves as nearly equal; which one a player picks
+is a matter of taste. If Berliner keeps choosing the move that raises his
+Mobility over the one that gains Space, that \emph{is} his style.
+
+\paragraph{Method.} For every position after move 8 in Berliner's 16 games
+and the 12 games of the 2018 match\footnote{With the colors of the actual
+games. The QARC file \cite{CC18} lists Carlsen as White in all twelve games,
+which is wrong for games 1, 3, 5, 8, 10, and 12.}, {\tt Stockfish}~16 (depth 14)
+listed its six best moves. The \emph{candidates} are the moves within
+50 centipawns of the best. That leaves 1,455 positions with a real choice,
+after dropping 370 positions with only one playable move and 91 where the move
+played was more than 50 centipawns worse. For each candidate, CGA computed the
+change in Space, Mobility, King Safety and Threats (player minus opponent).
+A standard statistical model of choices (a conditional logit) then estimates
+how much each metric, and the evaluation, sways the player's choice.
+Every model was tested only on games it was not fitted on.
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Player} & \textbf{Choices} & \textbf{Random pick} & \textbf{Eval only} & \textbf{Eval + 4 metrics} \\
+\midrule
+Berliner & 281 & 31\% & 60\% & 57\% \\
+Berliner's opponents & 276 & 29\% & 50\% & 48\% \\
+Carlsen & 459 & 22\% & 49\% & 46\% \\
+Caruana & 439 & 24\% & 53\% & 49\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+\caption{How often each model's most likely move was the move actually played, on held-out games.}
+\label{tab:move-choice}
+\end{table}
+
+The results (Table~\ref{tab:move-choice}) are clear:
+\begin{itemize}
+\item Adding the four metrics to the evaluation makes the predictions slightly
+  \emph{worse} for every player, so the metrics do not reveal a personal style.
+\item Carlsen and Caruana cannot be told apart: a model fitted to Caruana's
+  choices predicts Carlsen's as well as Carlsen's own model does, and vice versa.
+\item Berliner's own model does beat his opponents' model, but only because he
+  picks {\tt Stockfish}'s preferred move more often. That is playing strength,
+  not style.
+\end{itemize}
+
+\section{What helps and what does not}
+
+There is one consistent pattern, and every group in the study shares it.
+Among near-equal moves, players pick the candidate that most increases their
+Threats, Mobility, or King Safety a few percentage points more often than a
+random choice would (Table~\ref{tab:top-choice}). Space barely matters.
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Candidate scoring highest on} & \textbf{Excess over random choice} & \textbf{90\% interval} \\
+\midrule
+{\tt Stockfish}'s evaluation & $+25.1$ points & $+23.0$ to $+27.4$ \\
+Threats & $+6.3$ points & $+4.6$ to $+8.0$ \\
+Mobility & $+4.7$ points & $+3.1$ to $+6.5$ \\
+King Safety & $+4.4$ points & $+2.4$ to $+6.4$ \\
+Space & $+1.7$ points & $+0.8$ to $+2.7$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\caption{How much more often than random the move played was the candidate
+scoring highest on each measure, over all 1,455 choices (intervals by
+resampling games).}
+\label{tab:top-choice}
+\end{table}
+
+\noindent
+Putting the two studies together:
+
+\begin{itemize}
+\item \textbf{Principles that help.} Coordination and activity (Mobility) and
+  pressure on the enemy (Threats), the ``fireteam'' half of the rithmomachia
+  idea, describe how strong players choose among equally good moves. They are
+  shared by all the players studied, so they describe good chess rather than one
+  player's style, and they are too weak to improve predictions once
+  {\tt Stockfish}'s evaluation is known. The metric plots in the examples above
+  also help explain \emph{why} a game went the way it did.
+\item \textbf{Principles that do not help.} Territory as such (Space) barely
+  influences the choices of strong players. Holding positional dominance as a
+  winning condition (the FTI prediction rules) does not predict results better
+  than simple baselines. And no weighting of the FTI acts as a signature of a
+  player's style.
+\end{itemize}
+
+These are small samples (fewer than 500 choices per player), the four metrics
+are simple, and the candidate moves came from a modest search depth. Better
+metrics might find something these four do not, and the tests above, which CGA
+now runs on every book, are the way to find out.
 
 % =============================================================================
 % Chess Game Analyzer - README Documentation
@@ -1489,7 +1540,7 @@ Black win, but with less confidence.
 \chapter{Appendix: Chess Game Analyzer module reference}
 \label{appendix:cga-readme}
 
-This is the readme file for the CGA program \cite{CGA26} generated by {\tt claude} (Anthropic),
+This is the readme file for the CGA program \cite{CGA26} generated by {\tt Claude} (Anthropic),
 with some editing by me.
 
 \section{Overview}
@@ -1536,13 +1587,14 @@ $\pm 10000$ & Checkmate is forced \\
 The module requires:
 \begin{itemize}
     \item \textbf{Python 3.8 or higher}
-    \item \textbf{python-chess}: The chess library that handles board representation, move generation, and PGN parsing
-    \item \textbf{matplotlib} (optional): For generating plots; the module works without it using ASCII plots
+    \item \textbf{python-chess} (installed as {\tt chess}): The chess library that handles board representation, move generation, and PGN parsing
+    \item \textbf{matplotlib} (optional): For generating plots; the module works without it using ASCII plots.
+      Plots also need the file \texttt{chess\_plotting.py} in the same folder as \texttt{chess\_game\_analyzer.py}.
 \end{itemize}
 
 To install the dependencies:
 \begin{verbatim}
-pip install python-chess matplotlib
+pip install chess matplotlib
 \end{verbatim}
 
 % -----------------------------------------------------------------------------
@@ -1552,11 +1604,12 @@ pip install python-chess matplotlib
 \begin{enumerate}
     \item \textbf{Install Stockfish} from \url{https://stockfishchess.org/download/}
     
-    \item \textbf{Clone the repository} \url{https://github.com/wdjoyner/chess-animator} or download \texttt{chess\_game\_analyzer.py} from it
+    \item \textbf{Clone the repository} \url{https://github.com/wdjoyner/chess-animator} or download \texttt{chess\_game\_analyzer.py} and \texttt{chess\_plotting.py} from it.
+    Keep both files in the same folder: without \texttt{chess\_plotting.py}, reports are produced with no plots.
     
     \item \textbf{Install Python dependencies}:
 \begin{verbatim}
-pip install python-chess matplotlib
+pip install chess matplotlib
 \end{verbatim}
     
     \item \textbf{Verify Stockfish path}:
@@ -1629,7 +1682,7 @@ with open("analysis.tex", "w") as f:
 
 \subsection{Space}
 
-\textbf{Space} measures territorial control, particularly in the center and the opponent's half of the board.
+\textbf{Space} measures territorial control: central squares in your own half of the board that your pawns guard.
 
 The computation counts squares on central files (c--f) in ranks 2--4 (for White) or 5--7 (for Black) that are:
 \begin{enumerate}
@@ -1639,7 +1692,7 @@ The computation counts squares on central files (c--f) in ranks 2--4 (for White)
 
 The raw count is divided by 10 to normalize the metric. Values typically range from 0.1 to 0.7.
 
-\paragraph{Example from Estrin vs Berliner (1965), move 20 (10...e4):}
+\paragraph{Example from Estrin vs Berliner (1965), ply 20 (10...e4):}
 \begin{itemize}
     \item White Space: 0.30
     \item Black Space: 0.30
@@ -1648,36 +1701,36 @@ At this point in a sharp Two Knights Defense, space is roughly equal, but the po
 
 \subsection{Mobility}
 
-\textbf{Mobility} counts the number of safe squares available to each piece, weighted by piece type.
+\textbf{Mobility} adds $0.1$ for every square attacked by one of your pieces
+(pawns included, the king excluded) that is not attacked by an enemy pawn.
+All piece types count equally, a square attacked by two of your pieces counts twice,
+and squares occupied by your own pieces count too.
+The metric captures piece activity and coordination.
 
-``Safe'' squares exclude:
+\textbf{Note on scale.} In QARC reports made before October 2026, including the two
+cited in this manual, the Mobility values in the tables and plots are half of this value,
+because of a since-fixed bug. The raw data block at the end of each \LaTeX{} file
+always stores the full value, and the numbers below use the full value.
+
+\paragraph{Example from Estrin vs Berliner, ply 30 (15...Bxf3):}
 \begin{itemize}
-    \item Squares attacked by enemy pawns
-    \item Squares that would result in material loss through exchange
-\end{itemize}
-
-Mobility in enemy territory is weighted higher. The metric captures piece activity and coordination.
-
-\paragraph{Example from Estrin vs Berliner, move 30 (15...Bxf3):}
-\begin{itemize}
-    \item White Mobility: 1.95
-    \item Black Mobility: 2.5
+    \item White Mobility: 3.90
+    \item Black Mobility: 5.00
 \end{itemize}
 After White's blunder 15.Be2??, Black's pieces have become significantly more active.
 
 \subsection{King Safety}
 
-\textbf{King Safety} combines several factors:
+\textbf{King Safety} combines two factors:
 
 \begin{enumerate}
-    \item \textbf{Pawn shield strength}: Pawns on the 2nd/3rd rank in front of the castled king
-    \item \textbf{King geometry}: Distance of enemy pieces to your king
-    \item \textbf{Attack units}: Enemy pieces attacking squares near your king
+    \item \textbf{Pawn shield}: $+0.5$ for each friendly pawn on the 2nd rank (7th for Black) on the king's file or an adjacent file
+    \item \textbf{Attacked squares}: $-0.2$ for each square within two squares of the king that an enemy piece attacks
 \end{enumerate}
 
 Positive values indicate a safe king; negative values indicate danger.
 
-\begin{example} From Estrin vs Berliner, move 52 (26...hxg2+):
+\begin{example} From Estrin vs Berliner, ply 52 (26...hxg2+):
 \begin{itemize}
     \item White King Safety: $-1.40$
     \item Black King Safety: $-0.70$
@@ -1699,7 +1752,7 @@ White's king is significantly more exposed after the pawn storm breaks through.
 
 Raw Threats values typically range from 1 to 30. In the Fireteam Index calculations, Threats is scaled down (divided by 20) to be comparable with the other metrics.
 
-\begin{example} From Estrin vs Berliner, move 24.Nc4: The Threats graph
+\begin{example} From Estrin vs Berliner, ply 47 (24.Nc4): The Threats graph
   has spikes and valleys in this part of the game.
 \begin{itemize}
     \item White Threats: 21.80
@@ -1722,7 +1775,9 @@ Similarly, in chess, sustained positional dominance across multiple factors---sp
 
 \subsection{FTI Signatures}
 
-Different players have different styles. A tactical player might win through direct threats, while a positional player grinds down opponents through space and piece activity. The module provides five FTI ``signatures'' with different weightings:
+The module provides five FTI weightings, originally intended as ``signatures'' of different
+playing styles (a tactical player might win through direct threats, a positional player through
+space and piece activity). Chapter~\ref{chap:testing-fti} found no evidence that they work that way.
 
 \begin{center}
 \begin{tabular}{lccccc}
@@ -1746,7 +1801,8 @@ where each $\Delta$ is (Player's value $-$ Opponent's value) and $T' = T / 20$ (
 
 \subsection{Prediction Algorithms}
 
-Three algorithms use the FTI to predict game outcomes:
+Three algorithms use the FTI to predict game outcomes. Chapter~\ref{chap:testing-fti}
+reports how well they work (not better than simple baselines, so far).
 
 \paragraph{1. Per-Ply (Raw).}
 \begin{itemize}
@@ -1765,8 +1821,8 @@ Three algorithms use the FTI to predict game outcomes:
 \paragraph{3. Balance (Confidence-based).}
 \begin{itemize}
     \item Counts plies where FTI $> \epsilon$ versus FTI $< -\epsilon$
-    \item Measures volatility (sign changes)
-    \item Computes confidence $= |B_n| \times (1 - V/V_{\rm max})$
+    \item Measures volatility $V$: how many times the FTI switches between $> \epsilon$ and $< -\epsilon$
+    \item Computes confidence $= |B_n| \times \max(0,\, 1 - V/V_{\rm thr})$, where $V_{\rm thr} = 0.2 \times$ (number of plies considered)
     \item Predicts {\it win/loss} if confidence $> 0.15$; otherwise {\it draw}.
     \item Best at detecting drawn games and balanced struggles.
 \end{itemize}
@@ -1779,7 +1835,7 @@ Let us walk through the analysis of a famous game from the 5th World Corresponde
 
 \subsection{The Game (C57 -- Two Knights Defense)}
 
-As we know form the previous chapter, the first few moves of the game are
+As we saw in the previous chapter, the first few moves of the game are
 as follows.
 
 \begin{quote}
@@ -1822,7 +1878,7 @@ The game swung wildly---White had $+2.24$ at one point, but Black eventually ach
 \textbf{Metric} & \textbf{White Average} & \textbf{Black Average} \\
 \midrule
 Space & 0.30 & 0.22 \\
-Mobility & 1.51 & 1.67 \\
+Mobility & 3.03 & 3.34 \\
 King Safety & $-0.25$ & $-0.22$ \\
 Threats & 6.35 & 5.91 \\
 \bottomrule
@@ -1861,7 +1917,7 @@ python chess_game_analyzer.py [PGN_FILE] [OPTIONS]
 \toprule
 \textbf{Option} & \textbf{Description} & \textbf{Default} \\
 \midrule
-\texttt{-o, --output FILE} & Output \LaTeX{} file path & stdout \\
+\texttt{-o, --output FILE} & Output \LaTeX{} file path & none (prints a summary) \\
 \texttt{--json-output FILE} & Output raw analysis as JSON & none \\
 \texttt{-s, --stockfish PATH} & Path to Stockfish executable & \texttt{/usr/games/stockfish} \\
 \texttt{-d, --depth N} & Analysis depth (higher = slower) & 20 \\
@@ -1910,7 +1966,7 @@ python chess_game_analyzer.py [PGN_FILE] [OPTIONS]
 \texttt{--book} & Analyze all games in PGN as a book \\
 \texttt{--book-title TITLE} & Title for the book \\
 \texttt{--book-author AUTHOR} & Author name \\
-\texttt{--prediction-winner} & Track winner in decisive games (default: true) \\
+\texttt{--prediction-winner} & Track the winner of each decisive game (always on) \\
 \texttt{--prediction-name NAME} & Track specific player by name \\
 \texttt{--no-prediction} & Disable FTI prediction section entirely \\
 \bottomrule
@@ -1989,14 +2045,16 @@ from chess_game_analyzer import (
     predict_outcome_per_ply,
     predict_outcome_windowed,
     predict_outcome_balance,
-    classify_game_character
+    classify_game_character,
+    FTI1_WEIGHTS
 )
 
-# Parse raw data from LaTeX file
-data = parse_raw_positional_data(tex_content, game_number=7)
+# Parse raw data from a CGA-generated LaTeX file (pass the file name)
+data = parse_raw_positional_data("berliner_book.tex", game_num=7)
 
-# Compute FTI from positional data
-fti_data = compute_fireteam_index(data)
+# FTI with the FTI1 weights, as in the reports (Threats divided by 20).
+# The prediction functions below compute the FTI themselves from `data`.
+fti_data = compute_fireteam_index(data, weights=FTI1_WEIGHTS)
 
 # Run predictions with custom weights
 from chess_game_analyzer import FTI2_WEIGHTS  # Tactical signature
@@ -2071,12 +2129,13 @@ from chess_game_analyzer import (
 \toprule
 \textbf{Classification} & \textbf{Centipawn Loss} \\
 \midrule
-Best & 0 (matches engine's first choice) \\
-Excellent & 0--10 cp \\
-Good & 10--25 cp \\
-Inaccuracy & 25--50 cp \\
-Mistake & 50--150 cp \\
-Blunder & 150+ cp \\
+Book & under 30 cp, and within the first 12 plies \\
+Best & 0--5 cp \\
+Excellent & 5--15 cp \\
+Good & 15--30 cp \\
+Inaccuracy & 30--60 cp \\
+Mistake & 60--120 cp \\
+Blunder & 120+ cp \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -2097,10 +2156,11 @@ The primary output is a \LaTeX{} document that can be compiled with \texttt{pdfl
     \item \textbf{Annotated Game}: Move-by-move with NAG symbols and comments
     \item \textbf{Critical Positions}: Diagrams at key moments with best alternatives
     \item \textbf{Methodology Section}: (optional) Detailed explanation of all metrics
-    \item \textbf{Fireteam Index Prediction}: (optional) Win prediction analysis with plots
+    \item \textbf{Fireteam Index Prediction}: (optional) Win prediction analysis with plots;
+      in book mode, also held-out tests of the FTI (see chapter~\ref{chap:testing-fti})
 \end{enumerate}
 
-Required \LaTeX{} packages: \texttt{xskak}, \texttt{chessboard}, \texttt{amsmath}, \texttt{pgfplots}, \texttt{graphicx}, \texttt{hyperref}.
+Required \LaTeX{} packages: \texttt{xskak}, \texttt{chessboard}, \texttt{amsmath}, \texttt{amssymb}, \texttt{geometry}, \texttt{longtable}, \texttt{booktabs}, \texttt{xcolor}, \texttt{pgfplots}, \texttt{graphicx}, \texttt{hyperref}.
 
 \subsection{JSON Output}
 
@@ -2118,8 +2178,8 @@ Raw analysis data in JSON format for programmatic access:
       "eval_after": 15,
       "classification": "best",
       "positional_eval": {
-        "space_white": 0.40,
-        "space_black": 0.40,
+        "space_white_mg": 0.40,
+        "space_black_mg": 0.40,
         "mobility_white_mg": 3.90,
         ...
       }
@@ -2149,7 +2209,8 @@ Fields: ply, SAN, eval\_cp, space\_w, space\_b, mob\_w, mob\_b, ks\_w, ks\_b, th
 \section{License}
 % -----------------------------------------------------------------------------
 
-This software is released under your choice of either the \textbf{MIT License} or the \textbf{Modified BSD License}.
+This software is released under the \textbf{MIT License} (see the file \texttt{LICENSE.txt}
+in the repository).
 
 \begin{quote}
 Copyright \textcopyright{} 2026, David Joyner
@@ -2170,7 +2231,7 @@ Copyright \textcopyright{} 2026, David Joyner
 \begin{thebibliography}{999}
 
 \bibitem[Du17]{Du17} A. Dunne, {\it Hans Berliner, 1929-2017},
-Chess Life, May 2017, pp43-45.
+Chess Life, May 2017, pp.~43--45.
 
 \bibitem[Be65]{Be65} {\it Quantitative-Analytic Reports on Chess:
   Berliner’s games, 5th World Ch. ICCF 1965-1968}
@@ -2181,7 +2242,7 @@ Available at:
 \newline
 \url{https://github.com/wdjoyner/qarc}
 
-\bibitem[Be99]{Be99} H. Berliner, {\bf The system}, Gambit Publ., 1999.
+\bibitem[Be99]{Be99} H. Berliner, {\bf The System: A World Champion's Approach to Chess}, Gambit Publ., 1999.
 
 \bibitem[Be05]{Be05} Interview with Gardner Hendrie on 2005-03-07,
 {\it Oral history of Hans Berliner},  
@@ -2197,14 +2258,15 @@ Available at:
 \newline
 \url{https://github.com/wdjoyner/qarc}
 
-\bibitem[CGA26]{CGA26} D. Joyner, the Chess Game Analyzer, version 6y.
+\bibitem[CGA26]{CGA26} D. Joyner, the Chess Game Analyzer.
 Available at:
 \newline
 \url{https://github.com/wdjoyner/chess-animator}
 
 
-\bibitem[FEN]{FEN} D. Forsyth and S. Edwards,
-  {\it Portable Game Notation Specification and Implementation Guide},
+\bibitem[FEN]{FEN} S. J. Edwards,
+  {\it Portable Game Notation Specification and Implementation Guide}, 1994.
+  Section 16.1 defines FEN, which extends a notation devised by D. Forsyth.
 Available at:
 \newline
 \url{https://github.com/fsmosca/PGN-Standard/blob/master/PGN-Standard.txt}
