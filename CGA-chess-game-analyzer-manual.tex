@@ -414,7 +414,7 @@ have been made.
 
 
 \begin{example}
-For example, the $-319$cp blunder at move 15 in \S \ref{sec:estrin-berliner-15Be2}
+For example, the $-328$cp blunder at move 15 in \S \ref{sec:estrin-berliner-15Be2}
 below shows what happened but the Mobility and Threats changes in moves 8-14
 show why the position was ripe for sharp play from both sides.
 \end{example}
@@ -575,7 +575,7 @@ Data at ply 10/move 5:
 %\item  
 %Threats: W 10.80, B 6.80
 %\item  
-Eval: +0.45
+Eval: +0.55
 %\end{itemize}
 
 Look at the Threats metric---White's threats spike to 10.80 because the b5-pawn is hanging.
@@ -589,7 +589,7 @@ Berliner is accepting material deficit for piece activity.
 \vskip .1in
 \noindent
 {\bf
-6. Bf1 Nd4 7. c3! Nxd5! 8. Ne4?! Qh4?
+6. Bf1 Nd4 7. c3! Nxd5! 8. Ne4 Qh4?
 }
 
 \vskip .1in
@@ -599,12 +599,12 @@ From the game's annotation by {\tt Stockfish}, both 8 ... Nc6 and 8 ... Ne6 are 
 \vskip .1in
 \noindent
 {\bf
-9. Ng3! Bg4?
+9. Ng3! Bg4
 }
 
 \vskip .1in
 \noindent
-Again, {\tt Stockfish} recommends 9 ... Nc6.
+This time {\tt Stockfish} has no objection to Black's move.
 
 \begin{center}
 \begin{figure}[h!]
@@ -640,7 +640,7 @@ Data at ply 18/move 9:
 %\item  
 %Threats: W 3.50, B 9.50
 %\item  
-Eval: +1.55
+Eval: +0.99
 %\end{itemize}
 
 The game goes on (see \cite{Be65}):
@@ -648,22 +648,22 @@ The game goes on (see \cite{Be65}):
 \vskip .1in
 \noindent
 {\bf
-10. f3! e4?
+10. f3 e4??
 }
 
 \vskip .1in
 \noindent
-Black loses 67cp. Consider instead: Bd7, Be6, Bd6.
+Black loses 139cp. {\tt Stockfish} recommends 10...Bd7 instead.
 
 \vskip .1in
 \noindent
 {\bf
-11. cxd4 Bd6! 12. Bxb5+ Kd8 13. O-O exf3 14. Rxf3! Rb8 
+11. cxd4 Bd6 12. Bxb5+? Kd8?! 13. O-O exf3! 14. Rxf3! Rb8!
 }
 
 \vskip .1in
 \noindent
-This sets up a crucial position.
+{\tt Stockfish} prefers 12. Qe2 to 12. Bxb5+. The position after 14...Rb8 is a crucial one.
 
 
 \subsection{The blunder}
@@ -680,7 +680,7 @@ With threats from both sides, the next move is important.
 \noindent
 {\it Looks} good but, in fact, some commentators say
 this natural-looking move is the move that lost the game.
-Stockfish recommends 15 Bf1 or else 15 a4.
+{\tt Stockfish} recommends 15. Bf1 instead; 15. Be2 loses about 330 centipawns.
 
 
 \begin{center}
@@ -717,7 +717,7 @@ Data at ply 29/move 15:
 %\item  
 %Threats: W 3.80, B 4.70
 %\item  
-Eval: -1.26
+Eval: -1.57
 %\end{itemize}
 
 \subsection{The tactical middlegame (Moves 15–28)}
@@ -737,8 +737,8 @@ The game continues:
 \vskip .1in
 \noindent
 {\bf
-17. Kh1! Bxg3! 18. hxg3! Rb6 19. d3! Ne3! 20. Bxe3! Qxe3! 21. Bg4 h5 22. Bh3! g5
-23. Nd2! g4! 24. Nc4! Qxg3! 25. Nxb6! gxh3! 26. Qf3 hxg2+ 27. Qxg2! Qxg2+
+17. Kh1! Bxg3! 18. hxg3! Rb6 19. d3! Ne3 20. Bxe3 Qxe3! 21. Bg4 h5! 22. Bh3! g5
+23. Nd2 g4 24. Nc4! Qxg3 25. Nxb6 gxh3 26. Qf3 hxg2+ 27. Qxg2! Qxg2+!
 }
 
 \vskip .1in
@@ -753,12 +753,12 @@ We enter a new phase of the endgame.
 \vskip .1in
 \noindent
 {\bf
-28. Kxg2 cxb6! 29. Rf1 Ke7! 30. Re1+! Kd6 31. Rf1! Rc8?
+28. Kxg2! cxb6 29. Rf1 Ke7 30. Re1+ Kd6 31. Rf1 Rc8?
 }
 
 \vskip .1in
 \noindent
-{\tt Stockfish} recommends Ke6, Ke7, or Rh7 instead.
+{\tt Stockfish} recommends 31...Ke6 or 31...Ke7 instead.
 
 \begin{center}
 \begin{figure}[h!]
@@ -795,18 +795,18 @@ Data at ply 62/move 31:
 %\item  
 %Threats: W 4.50, B 2.10
 %\item  
-Eval: -1.21
+Eval: -1.28
 %\end{itemize}
 
 \vskip .1in
 \noindent
 {\bf
-32. Rxf7?! Rc7! 33. Rf2?
+32. Rxf7 Rc7 33. Rf2?
 }
 
 \vskip .1in
 \noindent
-{\tt Stockfish} suggests to consider instead the move Rf6+.
+{\tt Stockfish} suggests 33. Rf5 instead.
 
 
 \vskip .1in
@@ -818,13 +818,13 @@ Eval: -1.21
 \vskip .1in
 \noindent
 This is a more serious error, but not of the same magnitude as 15 Be2??.
-With 34. a4??, {\tt eval} drops from $-2.24$ to $-4.01$.
+With 34. a4??, {\tt eval} drops from $-1.90$ to $-3.52$.
 Here, {\tt Stockfish} recommends instead Rf8.
 
 \vskip .1in
 \noindent
 {\bf
-34...Kd4! 35. a5?! Kxd3
+34...Kd4! 35. a5 Kxd3
 }
 
 
@@ -835,17 +835,17 @@ The final moves of the game.
 \vskip .1in
 \noindent
 {\bf
-36. Rf3+ Kc2?! 37. b4 b5! 38. a6?! Rc4?! 39. Rf7 Rxb4 40. Rb7?! Rg4+! 41. Kf3?
+36. Rf3+! Kc2! 37. b4?! b5! 38. a6? Rc4?! 39. Rf7 Rxb4! 40. Rb7? Rg4+! 41. Kf3
 }
 
 \vskip .1in
 \noindent
-{\tt Stockfish} suggests instead Kh3.
+{\tt Stockfish} flags 38. a6? (38. Rf5 was better) and 40. Rb7? (40. Rxa7 was better).
 
 \vskip .1in
 \noindent
 {\bf 
-41...b4?! 42. Rxa7! b3! 0-1
+41...b4! 42. Rxa7 b3! 0-1
 }
 
 \vskip .1in
@@ -937,7 +937,7 @@ Notice how the line hovers around zero for the first 10-15 moves,
 then drifts into negative territory,
 favoring Caruana. The game reaches its most critical point around
 moves 67-68 where we see a
-dramatic spike to about $-2.5$ pawns, a huge advantage for Black.
+dramatic spike to about $-2.3$ pawns, a large advantage for Black.
 Unfortunately for Caruana, that was followed by an equally dramatic
 swing back toward zero.
 
@@ -956,8 +956,7 @@ swing back toward zero.
 \noindent
 While this is part of opening theory\footnote{ECO C42:
 Petrov’s Defence, Karklins-Martinovsky Variation, to be precise.},
-{\tt Stockfish} registered Carlsen's move as an inaccuracy,
-preferring instead Nf3 or Nc4.
+{\tt Stockfish} marks Carlsen's move as an inaccuracy (?!).
 
 \vskip .2in
 %\begin{figure}
@@ -966,10 +965,7 @@ preferring instead Nf3 or Nc4.
 {\bf Position 1: After 4. Nd3 }
 
 \noindent
-{Biggest evaluation swing(s) (39cp)}
-
-\noindent
-Evaluation: +0.00
+Evaluation: +0.08
 %\begin{center}
 
 %\begin{small}
@@ -1001,12 +997,12 @@ Evaluation: +0.00
 4 ... Nxe4
 5. Qe2 Qe7
 6. Nf4 Nc6
-7. Nd5 Nd4!
-8. Nxe7! Nxe2!
+7. Nd5! Nd4!
+8. Nxe7 Nxe2!
 9. Nd5! Nd4!
-10. Na3 Ne6
-11. f3! N4c5!
-12. d4 Nd7
+10. Na3 Ne6!
+11. f3! N4c5
+12. d4! Nd7
 13. c3 c6!
 14. Nf4! Nb6!
 15. Bd3 d5
@@ -1043,14 +1039,14 @@ The game continued:
 {\bf
 16. Nc2! Bd6
 17. Nxe6 Bxe6
-18. Kf2 h5
-19. h4 Nc8
+18. Kf2! h5!
+19. h4! Nc8
 20. Ne3 Ne7
-21. g3 c5!
+21. g3! c5!
 22. Bc2 O-O
 23. Rd1 Rfd8
 24. Ng2 cxd4!
-25. cxd4! Rac8
+25. cxd4 Rac8
 }
 
 \vskip .1in
@@ -1091,12 +1087,12 @@ The game continued:
 \noindent
 {\bf
 26. Bb3! Nc6
-27. Bf4! Na5
+27. Bf4 Na5!
 28. Rdc1! Bb4
-29. Bd1 Nc4!
+29. Bd1?! Nc4
 30. b3! Na3
 31. Rxc8! Rxc8!
-32. Rc1 Nb5
+32. Rc1! Nb5
 33. Rxc8+! Bxc8!
 }
 
@@ -1142,15 +1138,15 @@ The game continued:
 \noindent
 {\bf
 34. Ne3 Nc3!
-35. Bc2 Ba3
+35. Bc2! Ba3!
 36. Bb8 a6
 37. f4 Bd7
-38. f5 Bc6
+38. f5?! Bc6!
 39. Bd1! Bb2
 40. Bxh5 Ne4+
-41. Kg2 Bxd4!
-42. Bf4 Bc5
-43. Bf3! Nd2!
+41. Kg2! Bxd4!
+42. Bf4 Bc5!
+43. Bf3! Nd2
 }
 
 \vskip .1in
@@ -1194,14 +1190,14 @@ dropping piece Mobility but escalating Threats.
 \vskip .1in
 
 \noindent
-{\tt Stockfish} didn't like Carlsen's move and suggests considering Nd1, Nf1, or Nc2 instead.
+{\tt Stockfish} didn't like Carlsen's move and suggests considering Nf1 or Nd1 instead.
 
 \vskip .1in
 
 \noindent
 {\bf Position 6: After 44. Bxd5}
 
-Evaluation: -0.81
+Evaluation: -0.80
 
 %\chessboard[setfen=6k1/1p3pp1/p1b5/2bB1P2/5B1P/1P2N1P1/P2n2K1/8 b - - 0 44]
 
@@ -1228,39 +1224,39 @@ The game continued:
 {\bf
 44...Bxe3!
 45. Bxc6! Bxf4!
-46. Bxb7! Bd6!
+46. Bxb7! Bd6
 47. Bxa6 Ne4!
 48. g4! Ba3!
 49. Bc4 Kf8
 50. g5 Nc3!
-51. b4! Bxb4
+51. b4 Bxb4
 52. Kf3 Na4!
 53. Bb5 Nc5?!
 54. a4?! f6
-55. Kg4 Ne4
-56. Kh5 Be1!
-57. Bd3 Nd6
-58. a5 Bxa5
+55. Kg4! Ne4
+56. Kh5 Be1
+57. Bd3?! Nd6
+58. a5 Bxa5!
 59. gxf6! gxf6!
 60. Kg6! Bd8
-61. Kh7! Nf7
-62. Bc4 Ne5!
-63. Bd5 Ba5
+61. Kh7 Nf7?!
+62. Bc4! Ne5
+63. Bd5! Ba5
 64. h5! Bd2
 65. Ba2 Nf3
-66. Bd5 Nd4!
-67. Kg6??
+66. Bd5 Nd4
+67. Kg6?!
 }
 
 \vskip .1in
 \noindent
-{\tt Stockfish} considered this to be a losing mistake, suggesting instead: Be4.
+{\tt Stockfish} marks this as an inaccuracy: after 67...Bg5, Black is more than two pawns ahead.
 
 \vskip .1in
 \noindent
 {\bf Position 7: After 67. Kg6}
 
-Evaluation: -2.47
+Evaluation: -1.35
 
 \chessboard[setfen=5k2/8/5pK1/3B1P1P/3n4/8/3b4/8 b - - 6 67]
 
@@ -1279,8 +1275,7 @@ Evaluation: -2.47
 
 \subsection{The later endgame (67-80)}
 
-Black has a winning advantage at this point, according to
-{\tt Stockfish}.
+After 67...Bg5, {\tt Stockfish} rates Black's advantage at $-2.27$, the largest of the game.
 
 \vskip .1in
 
@@ -1334,17 +1329,17 @@ The game concluded this way:
 
 \noindent
 {\bf
-69. Kh7! Ne5
+69. Kh7 Ne5
 70. Bb3 Ng4
 71. Bc4 Ne3!
-72. Bd3! Ng4!
-73. Bc4! Nh6
-74. Kg6! Ke7
-75. Bb3! Kd6
+72. Bd3! Ng4
+73. Bc4 Nh6
+74. Kg6 Ke7
+75. Bb3! Kd6?!
 76. Bc2! Ke5
 77. Bd3 Kf4
-78. Bc2! Ng4!
-79. Bb3 Ne3
+78. Bc2 Ng4
+79. Bb3 Ne3?!
 80. h6! Bxh6!
 1/2-1/2
 }
@@ -1423,7 +1418,7 @@ FTI weights refit with the game held out & 13/16 & 11/15$^*$ \\
 
 No FTI rule beats simply predicting a Berliner win every time. The FTI is
 also only weakly related to the evaluation: across all positions after ply 16,
-the correlation between FTI1 and {\tt Stockfish}'s evaluation is $0.26$.
+the correlation between FTI1 and {\tt Stockfish}'s evaluation is $0.28$.
 For the 2018 Carlsen-Caruana match no such test is possible, because all
 twelve games were drawn.
 
@@ -1443,8 +1438,9 @@ Mobility over the one that gains Space, that \emph{is} his style.
 
 \paragraph{Method.} For every position after move 8 in Berliner's 16 games
 and the 12 games of the 2018 match\footnote{With the colors of the actual
-games. The QARC file \cite{CC18} lists Carlsen as White in all twelve games,
-which is wrong for games 1, 3, 5, 8, 10, and 12.}, {\tt Stockfish}~16 (depth 14)
+games. Before October 2026, the QARC file \cite{CC18} listed Carlsen as White in
+all twelve games, which was wrong for games 1, 3, 5, 8, 10, and 12; the current
+version is correct.}, {\tt Stockfish}~16 (depth 14)
 listed its six best moves. The \emph{candidates} are the moves within
 50 centipawns of the best. That leaves 1,455 positions with a real choice,
 after dropping 370 positions with only one playable move and 91 where the move
@@ -1853,22 +1849,22 @@ Berliner plays the Ulvestad Variation (5...b5), a sharp gambit that had been ana
 \toprule
 \textbf{Metric} & \textbf{Estrin (White)} & \textbf{Berliner (Black)} \\
 \midrule
-Accuracy & 87.5\% & 92.1\% \\
-Avg centipawn loss & 26.6 & 16.5 \\
-Best moves & 18 & 21 \\
-Blunders & 2 & 0 \\
+Accuracy & 88.1\% & 92.1\% \\
+Avg centipawn loss & 25.3 & 16.4 \\
+Best moves & 14 & 16 \\
+Blunders & 2 & 1 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \paragraph{Game Character Classification.}
 \begin{itemize}
-    \item Evaluation range: $m_1 = -7.04$, $m_2 = +2.24$
-    \item Spread: $d = 9.28$ pawns
+    \item Evaluation range: $m_1 = -5.41$, $m_2 = +2.24$
+    \item Spread: $d = 7.65$ pawns
     \item Classification: \textbf{Chaotic seesaw battle}
 \end{itemize}
 
-The game swung wildly---White had $+2.24$ at one point, but Black eventually achieved $-7.04$.
+The game swung wildly---White had $+2.24$ at one point, but Black eventually achieved $-5.41$.
 
 \subsection{Positional Metrics Summary}
 
@@ -1895,9 +1891,9 @@ The module stores raw positional data in a machine-readable format:
 \begin{verbatim}
 % ply, SAN, eval_cp, space_w, space_b, mob_w, mob_b, ks_w, ks_b, 
 %      threats_w, threats_b
-% 29, Be2, -126, 0.300, 0.300, 5.000, 4.600, 0.000, 0.100, 3.800, 4.700
-% 30, Bxf3, -204, 0.200, 0.300, 3.900, 5.000, -0.200, 0.500, 7.600, 6.000
-% 31, Bxf3, -237, 0.300, 0.300, 4.000, 4.400, 0.200, 0.500, 7.400, 5.200
+% 29, Be2, -157, 0.300, 0.300, 5.000, 4.600, 0.000, 0.100, 3.800, 4.700
+% 30, Bxf3, -212, 0.200, 0.300, 3.900, 5.000, -0.200, 0.500, 7.600, 6.000
+% 31, Bxf3, -171, 0.300, 0.300, 4.000, 4.400, 0.200, 0.500, 7.400, 5.200
 \end{verbatim}
 
 This data can be parsed for further computational analysis, machine learning, or statistical studies.
@@ -2186,7 +2182,7 @@ Raw analysis data in JSON format for programmatic access:
     },
     ...
   ],
-  "white_stats": {"accuracy": 87.5, ...},
+  "white_stats": {"accuracy": 88.1, ...},
   "black_stats": {"accuracy": 92.1, ...}
 }
 \end{verbatim}
@@ -2235,7 +2231,7 @@ Chess Life, May 2017, pp.~43--45.
 
 \bibitem[Be65]{Be65} {\it Quantitative-Analytic Reports on Chess:
   Berliner’s games, 5th World Ch. ICCF 1965-1968}
-  ({\small Generated by Stockfish 17.1 on January 28, 2026}),
+  ({\small Generated by Stockfish 16, depth 20, on October 18, 2026}),
   the QARC pdf of Berliner's games in the
   5th World Correspondence Chess Championship, ICCF, 1965.
 Available at:
@@ -2251,7 +2247,7 @@ CHM Reference number X3131.2005, Computer History Museum, 2005.
 
 \bibitem[CC18]{CC18} {\it Quantitative-Analytic Reports on Chess:
    Carlsen vs Caruana, 2018 World Championship, London}
-  ({\small Generated by Stockfish 17.1 on January 29, 2026}),
+  ({\small Generated by Stockfish 16, depth 20, on October 18, 2026}),
   the QARC pdf of all 12 games in the
   2018 World Chess Championship, FIDE.
 Available at:

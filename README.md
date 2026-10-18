@@ -31,7 +31,7 @@ Each game is presented as its own chapter with: (1) clean **game metadata** and 
 
 Tests described in the CGA manual (chapter "Testing the Fireteam Index") found that, on these games, the Fireteam Index does not predict results better than simple baselines, and its weightings do not distinguish one player's style from another's. What does hold up is a small preference shared by all the players studied: among near-equal moves, they choose the more active one (higher Threats, Mobility, or King Safety) more often than chance. In short, some rithmomachia principles help with chess and some do not.
 
-Note: the Carlsen–Caruana report lists Carlsen as White in all twelve games; in the actual match the colors alternated (Caruana had White in games 1, 3, 5, 8, 10 and 12). `carlsen-caruana-2018.pgn` has the correct colors, for regenerating the report.
+Both books were regenerated on 2026-10-18 with the current CGA (Stockfish 16, depth 20). Earlier versions of the Carlsen–Caruana report listed Carlsen as White in all twelve games; the current report, made from `carlsen-caruana-2018.pgn`, has the correct colors.
 
 ## Files
 
