@@ -31,7 +31,7 @@ Each game is presented as its own chapter with: (1) clean **game metadata** and 
 
 Tests described in the CGA manual (chapter "Testing the Fireteam Index") found that, on these games, the Fireteam Index does not predict results better than simple baselines, and its weightings do not distinguish one player's style from another's. What does hold up is a small preference shared by all the players studied: among near-equal moves, they choose the more active one (higher Threats, Mobility, or King Safety) more often than chance. In short, some rithmomachia principles help with chess and some do not.
 
-Note: the Carlsen–Caruana report lists Carlsen as White in all twelve games; in the actual match the colors alternated (Caruana had White in games 1, 3, 5, 8, 10 and 12).
+Note: the Carlsen–Caruana report lists Carlsen as White in all twelve games; in the actual match the colors alternated (Caruana had White in games 1, 3, 5, 8, 10 and 12). `carlsen-caruana-2018.pgn` has the correct colors, for regenerating the report.
 
 ## Files
 
@@ -40,6 +40,7 @@ Note: the Carlsen–Caruana report lists Carlsen as White in all twelve games; i
 | `CGA-chess-game-analyzer-manual.pdf` / `.tex` | User manual for CGA |
 | `berliner-games-1965-world-corr-ch.pgn` | Source PGN: Berliner's 16 games, 5th ICCF World Championship |
 | `berliner-games-1965-world-corr-champ-book.pdf` / `.tex` | QARC book of those games |
+| `carlsen-caruana-2018.pgn` | Source PGN: the 12 classical games of the 2018 World Championship, with the correct colors |
 | `carlsen-vs-caruana-match_WCC2018-2018-11-london_qarc.pdf` / `.tex` | QARC report of the 12 games of the 2018 World Championship |
 
 For more on CGA and QARC, see <a href="https://yetanothermathblog.com/mathematics-and-chess/medieval-monks-to-modern-metrics/" target="_blank">Medieval monks to modern metrics</a>.
